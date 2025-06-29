@@ -13,6 +13,7 @@ An MCP (Model Context Protocol) server for interacting with Obsidian vault markd
 ## Installation
 
 1. Clone this repository:
+
    ```bash
    git clone <repository-url>
    cd obsidian-mcp-server
@@ -20,15 +21,16 @@ An MCP (Model Context Protocol) server for interacting with Obsidian vault markd
 
 2. If using VS Code, execute the following command:
 
-  ```bash
-  yarn dlx @yarnpkg/sdks vscode
-  ```
-  
-  This modifies your .vscode/settings.json to add TypeScript compiler-wrapper inside tssdk as a Workspace TypeScript compiler.
+```bash
+yarn dlx @yarnpkg/sdks vscode
+```
 
-  (note: before executing this step, test whether it works without executing it, since the first time I did, it updated settings.json, which is now part of the project)
+This modifies your .vscode/settings.json to add TypeScript compiler-wrapper inside tssdk as a Workspace TypeScript compiler.
+
+(note: before executing this step, test whether it works without executing it, since the first time I did, it updated settings.json, which is now part of the project)
 
 2. Install dependencies:
+
    ```bash
    yarn install
    ```
@@ -83,27 +85,35 @@ Configure the server in your Claude Code settings or use it with the MCP CLI.
 ## Available Tools
 
 ### `list-notes`
+
 Lists all markdown notes in the vault with their metadata and tags.
 
 ### `read-note`
+
 Reads a specific note by file path.
 
 **Parameters:**
+
 - `notePath` (string, required): Path to the note file
 
 ### `search-notes`
+
 Searches for notes containing the specified query in title, content, tags, or metadata.
 
 **Parameters:**
+
 - `query` (string, required): Search query
 
 ### `list-tags`
+
 Lists all tags found across all notes in the vault.
 
 ### `create-note`
+
 Creates a new note with optional content and tags.
 
 **Parameters:**
+
 - `title` (string, required): Title of the note
 - `content` (string, optional): Content of the note
 - `tags` (array of strings, optional): Tags for the note

@@ -1,11 +1,11 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
-import type { VaultConfig } from './types/index.js';
-import { MarkdownUtils } from './utils/markdown.js';
+} from "@modelcontextprotocol/sdk/types.js";
+import type { VaultConfig } from "./types/index.js";
+import { MarkdownUtils } from "./utils/markdown.js";
 
 class ObsidianMCPServer {
   private server: Server;
@@ -15,14 +15,14 @@ class ObsidianMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'obsidian-mcp-server',
-        version: '1.0.0',
+        name: "obsidian-mcp-server",
+        version: "1.0.0",
       },
       {
         capabilities: {
           tools: {},
         },
-      }
+      },
     );
 
     this.vaultConfig = {
@@ -38,70 +38,70 @@ class ObsidianMCPServer {
       return {
         tools: [
           {
-            name: 'list-notes',
-            description: 'List all markdown notes in the Obsidian vault',
+            name: "list-notes",
+            description: "List all markdown notes in the Obsidian vault",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {},
             },
           },
           {
-            name: 'read-note',
-            description: 'Read the content of a specific note',
+            name: "read-note",
+            description: "Read the content of a specific note",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 notePath: {
-                  type: 'string',
-                  description: 'Path to the note file',
+                  type: "string",
+                  description: "Path to the note file",
                 },
               },
-              required: ['notePath'],
+              required: ["notePath"],
             },
           },
           {
-            name: 'search-notes',
-            description: 'Search for text across all notes',
+            name: "search-notes",
+            description: "Search for text across all notes",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 query: {
-                  type: 'string',
-                  description: 'Search query',
+                  type: "string",
+                  description: "Search query",
                 },
               },
-              required: ['query'],
+              required: ["query"],
             },
           },
           {
-            name: 'list-tags',
-            description: 'List all tags used in the vault',
+            name: "list-tags",
+            description: "List all tags used in the vault",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {},
             },
           },
           {
-            name: 'create-note',
-            description: 'Create a new note',
+            name: "create-note",
+            description: "Create a new note",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 title: {
-                  type: 'string',
-                  description: 'Title of the note',
+                  type: "string",
+                  description: "Title of the note",
                 },
                 content: {
-                  type: 'string',
-                  description: 'Content of the note',
+                  type: "string",
+                  description: "Content of the note",
                 },
                 tags: {
-                  type: 'array',
-                  items: { type: 'string' },
-                  description: 'Tags for the note',
+                  type: "array",
+                  items: { type: "string" },
+                  description: "Tags for the note",
                 },
               },
-              required: ['title'],
+              required: ["title"],
             },
           },
         ],
@@ -113,19 +113,19 @@ class ObsidianMCPServer {
 
       try {
         switch (name) {
-          case 'list-notes':
+          case "list-notes":
             return await this.listNotes();
-          case 'read-note':
+          case "read-note":
             return await this.readNote(args?.notePath as string);
-          case 'search-notes':
+          case "search-notes":
             return await this.searchNotes(args?.query as string);
-          case 'list-tags':
+          case "list-tags":
             return await this.listTags();
-          case 'create-note':
+          case "create-note":
             return await this.createNote(
               args?.title as string,
               args?.content as string,
-              args?.tags as string[]
+              args?.tags as string[],
             );
           default:
             throw new Error(`Unknown tool: ${name}`);
@@ -134,7 +134,7 @@ class ObsidianMCPServer {
         return {
           content: [
             {
-              type: 'text',
+              type: "text",
               text: `Error: ${error instanceof Error ? error.message : String(error)}`,
             },
           ],
@@ -147,7 +147,7 @@ class ObsidianMCPServer {
   private async listNotes() {
     try {
       const notes = await this.markdownUtils.getAllNotes();
-      const notesList = notes.map(note => ({
+      const notesList = notes.map((note) => ({
         name: note.name,
         path: note.path,
         tags: note.tags,
@@ -157,42 +157,49 @@ class ObsidianMCPServer {
       return {
         content: [
           {
-            type: 'text',
-            text: `Found ${notes.length} notes:\n\n` + 
-                  notesList.map(note => 
+            type: "text",
+            text:
+              `Found ${notes.length} notes:\n\n` +
+              notesList
+                .map(
+                  (note) =>
                     `**${note.name}**\n` +
                     `Path: ${note.path}\n` +
-                    `Tags: ${note.tags.join(', ') || 'None'}\n` +
-                    (Object.keys(note.metadata).length > 0 ? 
-                      `Metadata: ${JSON.stringify(note.metadata, null, 2)}\n` : '') +
-                    '\n'
-                  ).join(''),
+                    `Tags: ${note.tags.join(", ") || "None"}\n` +
+                    (Object.keys(note.metadata).length > 0
+                      ? `Metadata: ${JSON.stringify(note.metadata, null, 2)}\n`
+                      : "") +
+                    "\n",
+                )
+                .join(""),
           },
         ],
       };
     } catch (error) {
-      throw new Error(`Failed to list notes: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to list notes: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   private async readNote(notePath: string) {
     try {
       if (!notePath) {
-        throw new Error('Note path is required');
+        throw new Error("Note path is required");
       }
 
       const note = await this.markdownUtils.parseNote(notePath);
-      
+
       let response = `# ${note.name}\n\n`;
-      
+
       if (Object.keys(note.metadata).length > 0) {
         response += `**Metadata:**\n\`\`\`json\n${JSON.stringify(note.metadata, null, 2)}\n\`\`\`\n\n`;
       }
-      
+
       if (note.tags.length > 0) {
-        response += `**Tags:** ${note.tags.map(tag => `#${tag}`).join(' ')}\n\n`;
+        response += `**Tags:** ${note.tags.map((tag) => `#${tag}`).join(" ")}\n\n`;
       }
-      
+
       if (note.content.trim()) {
         response += `**Content:**\n${note.content}`;
       } else {
@@ -202,119 +209,138 @@ class ObsidianMCPServer {
       return {
         content: [
           {
-            type: 'text',
+            type: "text",
             text: response,
           },
         ],
       };
     } catch (error) {
-      throw new Error(`Failed to read note: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to read note: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   private async searchNotes(query: string) {
     try {
-      if (!query || query.trim() === '') {
-        throw new Error('Search query is required');
+      if (!query || query.trim() === "") {
+        throw new Error("Search query is required");
       }
 
       const matchingNotes = await this.markdownUtils.searchNotes(query);
-      
+
       if (matchingNotes.length === 0) {
         return {
           content: [
             {
-              type: 'text',
+              type: "text",
               text: `No notes found matching query: "${query}"`,
             },
           ],
         };
       }
 
-      const response = `Found ${matchingNotes.length} notes matching "${query}":\n\n` +
-        matchingNotes.map(note => {
-          const preview = note.content.length > 200 
-            ? note.content.substring(0, 200) + '...' 
-            : note.content;
-          
-          return `**${note.name}**\n` +
-                 `Path: ${note.path}\n` +
-                 `Tags: ${note.tags.join(', ') || 'None'}\n` +
-                 `Preview: ${preview.replace(/\n/g, ' ')}\n\n`;
-        }).join('');
+      const response =
+        `Found ${matchingNotes.length} notes matching "${query}":\n\n` +
+        matchingNotes
+          .map((note) => {
+            const preview =
+              note.content.length > 200
+                ? note.content.substring(0, 200) + "..."
+                : note.content;
+
+            return (
+              `**${note.name}**\n` +
+              `Path: ${note.path}\n` +
+              `Tags: ${note.tags.join(", ") || "None"}\n` +
+              `Preview: ${preview.replace(/\n/g, " ")}\n\n`
+            );
+          })
+          .join("");
 
       return {
         content: [
           {
-            type: 'text',
+            type: "text",
             text: response,
           },
         ],
       };
     } catch (error) {
-      throw new Error(`Failed to search notes: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to search notes: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   private async listTags() {
     try {
       const tags = await this.markdownUtils.getAllTags();
-      
+
       if (tags.length === 0) {
         return {
           content: [
             {
-              type: 'text',
-              text: 'No tags found in the vault.',
+              type: "text",
+              text: "No tags found in the vault.",
             },
           ],
         };
       }
 
-      const response = `Found ${tags.length} tags in the vault:\n\n` +
-        tags.map(tag => `• #${tag}`).join('\n');
+      const response =
+        `Found ${tags.length} tags in the vault:\n\n` +
+        tags.map((tag) => `• #${tag}`).join("\n");
 
       return {
         content: [
           {
-            type: 'text',
+            type: "text",
             text: response,
           },
         ],
       };
     } catch (error) {
-      throw new Error(`Failed to list tags: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to list tags: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   private async createNote(title: string, content?: string, tags?: string[]) {
     try {
-      if (!title || title.trim() === '') {
-        throw new Error('Note title is required');
+      if (!title || title.trim() === "") {
+        throw new Error("Note title is required");
       }
 
-      const noteContent = content || '';
+      const noteContent = content || "";
       const noteTags = tags || [];
 
-      const filePath = await this.markdownUtils.createNote(title, noteContent, noteTags);
-      
+      const filePath = await this.markdownUtils.createNote(
+        title,
+        noteContent,
+        noteTags,
+      );
+
       return {
         content: [
           {
-            type: 'text',
+            type: "text",
             text: `Successfully created note "${title}" at ${filePath}`,
           },
         ],
       };
     } catch (error) {
-      throw new Error(`Failed to create note: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to create note: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error('Obsidian MCP Server running on stdio');
+    console.error("Obsidian MCP Server running on stdio");
   }
 }
 
