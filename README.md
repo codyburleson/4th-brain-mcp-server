@@ -64,10 +64,15 @@ node dist/index.cjs
 
 Add the server to your Claude Desktop configuration:
 
+macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+Open up the configuration file in any text editor. Add the 4th Brain stanza as shown below and then close and restart Claude Desktop.
+
 ```json
 {
   "mcpServers": {
-    "obsidian": {
+    "4th Brain": {
       "command": "node",
       "args": ["/Users/dev/repos/4th-brain-mcp/dist/index.cjs"],
       "env": {
