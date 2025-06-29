@@ -18,6 +18,16 @@ An MCP (Model Context Protocol) server for interacting with Obsidian vault markd
    cd obsidian-mcp-server
    ```
 
+2. If using VS Code, execute the following command:
+
+  ```bash
+  yarn dlx @yarnpkg/sdks vscode
+  ```
+  
+  This modifies your .vscode/settings.json to add TypeScript compiler-wrapper inside tssdk as a Workspace TypeScript compiler.
+
+  (note: before executing this step, test whether it works without executing it, since the first time I did, it updated settings.json, which is now part of the project)
+
 2. Install dependencies:
    ```bash
    yarn install
