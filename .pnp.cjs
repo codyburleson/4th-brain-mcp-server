@@ -36,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["glob", "npm:10.4.5"],\
           ["gray-matter", "npm:4.0.3"],\
           ["obsidian-mcp-server", "workspace:."],\
+          ["prettier", "npm:3.6.2"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"],\
           ["vite", "virtual:23ded60aef4d481a9514a21b3e7e34868c7366135727311d0cd35eb69c08886bff6facb2df4c6c915b8286985d023587214c7c153cdbb4c8d2d31fcc68427dc9#npm:5.4.19"]\
         ],\
@@ -2705,6 +2706,7 @@ const RAW_RUNTIME_STATE =
           ["glob", "npm:10.4.5"],\
           ["gray-matter", "npm:4.0.3"],\
           ["obsidian-mcp-server", "workspace:."],\
+          ["prettier", "npm:3.6.2"],\
           ["typescript", "patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"],\
           ["vite", "virtual:23ded60aef4d481a9514a21b3e7e34868c7366135727311d0cd35eb69c08886bff6facb2df4c6c915b8286985d023587214c7c153cdbb4c8d2d31fcc68427dc9#npm:5.4.19"]\
         ],\
@@ -2910,6 +2912,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/prelude-ls-npm-1.2.1-3e4d272a55-10c0.zip/node_modules/prelude-ls/",\
         "packageDependencies": [\
           ["prelude-ls", "npm:1.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["prettier", [\
+      ["npm:3.6.2", {\
+        "packageLocation": "./.yarn/unplugged/prettier-npm-3.6.2-2668152203/node_modules/prettier/",\
+        "packageDependencies": [\
+          ["prettier", "npm:3.6.2"]\
         ],\
         "linkType": "HARD"\
       }]\

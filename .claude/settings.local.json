@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__4th-brain__list-notes",
+      "mcp__4th-brain__search-notes",
+      "mcp__4th-brain__read-note",
+      "mcp__4th-brain__list-tags"
+    ],
+    "deny": []
+  }
+}

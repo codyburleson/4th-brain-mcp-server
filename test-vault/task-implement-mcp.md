@@ -18,7 +18,7 @@ Create an MCP server for interacting with Obsidian vault markdown notes.
 
 - [x] Basic server setup
 - [x] Note listing functionality
-- [x] Note reading functionality  
+- [x] Note reading functionality
 - [x] Search functionality
 - [x] Tag management
 - [ ] Advanced querying

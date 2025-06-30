@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Running pre-commit tasks to reduce developer friction..."
+
+# Install first to ensure consistency before updating dependencies
+echo "✅ Running: yarn install"
+yarn install
+
+# Format code
+echo "✅ Running: yarn prettier"
+yarn prettier --write .
+
+# Update minor dependencies (prod only, not devDepenencies)
+# Notice we are using "yarn dlx" and not "npx" to get updates
+echo "✅ Running: updating minor dependencies"
+yarn dlx npm-check-updates --target minor --dep prod -u
+yarn dlx npm-check-updates --target patch --dep prod -u
+
+# Build project after deps are fresh
+echo "✅ Running: yarn build"
+yarn build
+
+# Add dependency updates
+echo "✅ Running: git add package.json yarn.lock"
+git add package.json yarn.lock
+
+echo "✅ Done!"
