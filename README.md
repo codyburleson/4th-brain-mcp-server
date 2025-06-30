@@ -1,6 +1,6 @@
-# Obsidian MCP Server
+# 4th Brain MCP Server
 
-An MCP (Model Context Protocol) server for interacting with Obsidian vault markdown notes. This server enables Claude and other LLM applications to read, search, and create notes in your Obsidian vault.
+An MCP (Model Context Protocol) server for interacting with markdown notes in a personal knowledge vault. This server enables Claude Desktop, Claude Code, and other LLM applications to interact with any personal knowledge management (PKM) system that follows the 4th Brain Open Standards and Guidelines. You can learn more about 4th Brain from the [4th Brain Reference Vault for Obsidian](https://github.com/codyburleson/4th-brain-reference-vault).
 
 ## Features
 
@@ -72,11 +72,11 @@ Open up the configuration file in any text editor. Add the 4th Brain stanza as s
 ```json
 {
   "mcpServers": {
-    "4th Brain": {
+    "4th-brain": {
       "command": "node",
       "args": ["/Users/dev/repos/4th-brain-mcp/dist/index.cjs"],
       "env": {
-        "OBSIDIAN_VAULT_PATH": "/Users/dev/repos/4th-brain-mcp/test-vault"
+        "VAULT_PATH": "/Users/dev/repos/4th-brain-mcp/test-vault"
       }
     }
   }
@@ -86,6 +86,35 @@ Open up the configuration file in any text editor. Add the 4th Brain stanza as s
 ### Integration with Claude Code
 
 Configure the server in your Claude Code settings or use it with the MCP CLI.
+
+First make sure your local entry point node file has execute permissions...
+
+```bash
+chmod +x /Users/dev/repos/4th-brain-mcp/dist/index.cjs
+```
+
+Execute the following Claude Code command:
+
+```bash
+claude mcp add 4th-brain -e VAULT_PATH=/Users/dev/repos/4th-brain-mcp/test-vault -s user -- /Users/dev/repos/4th-brain-mcp/dist/index.cjs
+```
+
+Where...
+
+e = environment variables
+s = scope (local, project, or user)
+
+Verify the MCP server is running with the following Claude Code slash command:
+
+```bash
+/mcp
+```
+
+You can remove the server from Claude Code with the following command:
+
+```bash
+claude mcp remove 4th-brain
+```
 
 ## Available Tools
 
@@ -156,13 +185,21 @@ I can use #inline-tags and [[wikilinks]].
 
 ```
 src/
-├── index.ts          # Main server entry point
+├── prompts/          # Pre-written templates that help users accomplish specific tasks
+├── resources/        # File-like data that can be read by clients (like API responses or file contents)
+├── tools/            # Functions that can be called by the LLM (with user approval)
 ├── types/            # TypeScript type definitions
 ├── utils/            # Utility functions
 │   └── markdown.ts   # Markdown parsing utilities
-└── tools/            # Individual tool implementations
+└── index.ts          # Main server entry point
 ```
 
 ## License
 
 MIT License
+
+## Developer References
+
+- https://modelcontextprotocol.io
+- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
+
