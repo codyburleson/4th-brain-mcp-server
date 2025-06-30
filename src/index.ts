@@ -38,7 +38,7 @@ class ObsidianMCPServer {
     );
 
     this.vaultConfig = {
-      path: process.env.OBSIDIAN_VAULT_PATH || process.cwd(),
+      path: process.env.VAULT_PATH || process.cwd(),
     };
 
     this.markdownUtils = new MarkdownUtils(this.vaultConfig);
