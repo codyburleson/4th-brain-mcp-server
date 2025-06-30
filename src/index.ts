@@ -14,7 +14,7 @@ import {
   CreateNoteTool,
 } from "./tools/index.js";
 
-class ObsidianMCPServer {
+class FourthBrainMCPServer {
   private server: Server;
   private vaultConfig: VaultConfig;
   private markdownUtils: MarkdownUtils;
@@ -27,8 +27,8 @@ class ObsidianMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: "obsidian-mcp-server",
-        version: "1.0.0",
+        name: "4th-brain-mcp-server",
+        version: "0.0.1",
       },
       {
         capabilities: {
@@ -171,9 +171,9 @@ class ObsidianMCPServer {
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error("Obsidian MCP Server running on stdio");
+    console.error("4th Brain MCP Server running on stdio");
   }
 }
 
-const server = new ObsidianMCPServer();
+const server = new FourthBrainMCPServer();
 server.run().catch(console.error);
