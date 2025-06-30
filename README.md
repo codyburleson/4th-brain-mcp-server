@@ -16,7 +16,7 @@ An MCP (Model Context Protocol) server for interacting with markdown notes in a 
 
    ```bash
    git clone <repository-url>
-   cd obsidian-mcp-server
+   cd 4th-brain-mcp-server
    ```
 
 2. If using VS Code, execute the following command:
@@ -44,10 +44,10 @@ This modifies your .vscode/settings.json to add TypeScript compiler-wrapper insi
 
 ### Environment Configuration
 
-Set the `OBSIDIAN_VAULT_PATH` environment variable to point to your Obsidian vault:
+Set the `VAULT_PATH` environment variable to point to your knowledge vault (an Obsidian vault, for example):
 
 ```bash
-export OBSIDIAN_VAULT_PATH="/path/to/your/obsidian/vault"
+export VAULT_PATH="/path/to/your/knowledge/vault"
 ```
 
 If not set, the server will use the current working directory.
@@ -74,9 +74,9 @@ Open up the configuration file in any text editor. Add the 4th Brain stanza as s
   "mcpServers": {
     "4th-brain": {
       "command": "node",
-      "args": ["/Users/dev/repos/4th-brain-mcp/dist/index.cjs"],
+      "args": ["/Users/dev/repos/4th-brain-mcp-server/dist/index.cjs"],
       "env": {
-        "VAULT_PATH": "/Users/dev/repos/4th-brain-mcp/test-vault"
+        "VAULT_PATH": "/Users/dev/repos/4th-brain-mcp-server/test-vault"
       }
     }
   }
@@ -90,13 +90,13 @@ Configure the server in your Claude Code settings or use it with the MCP CLI.
 First make sure your local entry point node file has execute permissions...
 
 ```bash
-chmod +x /Users/dev/repos/4th-brain-mcp/dist/index.cjs
+chmod +x /Users/dev/repos/4th-brain-mcp-server/dist/index.cjs
 ```
 
 Execute the following Claude Code command:
 
 ```bash
-claude mcp add 4th-brain -e VAULT_PATH=/Users/dev/repos/4th-brain-mcp/test-vault -s user -- /Users/dev/repos/4th-brain-mcp/dist/index.cjs
+claude mcp add 4th-brain -e VAULT_PATH=/Users/dev/repos/4th-brain-mcp-server/test-vault -s user -- /Users/dev/repos/4th-brain-mcp-server/dist/index.cjs
 ```
 
 Where...
