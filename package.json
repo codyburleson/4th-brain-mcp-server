@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && chmod +x dist/index.cjs",
     "dev": "vite build --watch",
     "start": "node dist/index.cjs",
     "lint": "eslint src",
